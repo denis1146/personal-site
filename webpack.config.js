@@ -36,13 +36,17 @@ module.exports = (env, argv) => {
       // isDevMode ? 'style-loader' :
       {
         loader: MiniCssExtractPlugin.loader,
-        // options: {
-        //   hmr: isDevMode,
-        //   reloadAll: true
-        // },
       },
       'css-loader',
-      //'postcss-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true,
+          postcssOptions: {
+            path: path.resolve(__dirname, 'src/js/postcss.config.js'),
+          },
+        },
+      },
     ];
 
     if (extra) {
@@ -99,6 +103,11 @@ module.exports = (env, argv) => {
         resourceQuery: /raw/,
         type: 'asset/source',
       },
+      {
+        test: /\.js$/i,
+        loader: 'babel-loader',
+        exclude: '/node_modules',
+      },
     ]
   }
 
@@ -139,7 +148,6 @@ module.exports = (env, argv) => {
       name: 'main',
       target: 'browserslist',
       mode: 'production',
-      // mode: argv.mode,
       context: PATHS.src, //    ./myFile.cpp
       entry: {
         main: {
@@ -149,8 +157,8 @@ module.exports = (env, argv) => {
         }
       },
       output: {
-        path: PATHS.dist,
         filename: filename('bundle.js', './'),
+        path: PATHS.dist,
         assetModuleFilename: `resources/${generatorBaseName()}`,
         clean: true,
       },
@@ -166,10 +174,6 @@ module.exports = (env, argv) => {
       devServer: {
         port: 4004,
         hot: isDevMode,
-        // overlay: {
-        //   warnings: false,
-        //   errors: true,
-        // },
       },
       watchOptions: {
         ignored: /node_modules/,

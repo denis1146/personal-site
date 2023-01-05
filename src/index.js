@@ -16,7 +16,7 @@ import MyStyles_1 from './styles/styles_1.scss'
 
 /////////////////
 
-
+import './js/common.js'
 
 
 const i = 555;
