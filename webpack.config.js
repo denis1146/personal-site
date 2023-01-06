@@ -173,7 +173,14 @@ module.exports = (env, argv) => {
       optimization: optimization(),
       devServer: {
         port: 4004,
-        hot: isDevMode,
+        hot: false,
+        liveReload: true,
+        client: {
+          overlay: {
+            errors: true,
+            warnings: true,
+          },
+        },
       },
       watchOptions: {
         ignored: /node_modules/,
