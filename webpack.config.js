@@ -113,7 +113,6 @@ module.exports = (env, argv) => {
 
   const plugins = () => {
     return [
-      // new webpack.SourceMapDevToolPlugin({filename: '[file].map'}), --- only dev
       new HtmlWebpackPlugin({
         template: './index.html',
         filename: 'index.html',
@@ -185,7 +184,7 @@ module.exports = (env, argv) => {
       watchOptions: {
         ignored: /node_modules/,
       },
-      devtool: isDevMode ? 'source-map' : 'eval',
+      devtool: isDevMode ? 'eval' : 'source-map',
       module: {
         rules: moduleRules()
       },
