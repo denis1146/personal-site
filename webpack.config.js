@@ -15,17 +15,18 @@ module.exports = (env, argv) => {
 // const TerserWebpackPlugin = require('terser-webpack-plugin');
 
   const isDevMode = argv.mode === 'development';
-  const isProdMode =  !isDevMode;
+  const isProdMode = !isDevMode;
 
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
     dist: path.resolve(__dirname, 'dist'),
+    assets: path.resolve(__dirname, 'src/assets'),
   }
 
   const SEPARATOR = '/';
   const addExt = ext => ext ? (ext.startsWith('.') ? ext : `.${ext}`) : '[ext]';
-  const generatorName =  (name, ext) => isDevMode ? `${name}${addExt(ext)}` : `${name}.[contenthash].bundle${addExt(ext)}`;
-  const generatorBaseName =  ext => isDevMode ? `[name]${addExt(ext)}` : `[name].[contenthash].bundle${addExt(ext)}`;
+  const generatorName = (name, ext) => isDevMode ? `${name}${addExt(ext)}` : `${name}.[contenthash].bundle${addExt(ext)}`;
+  const generatorBaseName = ext => isDevMode ? `[name]${addExt(ext)}` : `[name].[contenthash].bundle${addExt(ext)}`;
   const filename = (ext, path) => {
     path = path ? (path.endsWith(SEPARATOR) ? path : `${path}${SEPARATOR}`) : `[path]${SEPARATOR}`;
     return `${path}${generatorBaseName(ext)}`;
@@ -33,7 +34,7 @@ module.exports = (env, argv) => {
 
   const cssLoaders = extra => {
     const loaders = [
-      // isDevMode ? 'style-loader' :
+      env.WEBPACK_SERVE ? 'style-loader' :
       {
         loader: MiniCssExtractPlugin.loader,
       },
@@ -43,7 +44,7 @@ module.exports = (env, argv) => {
         options: {
           sourceMap: true,
           postcssOptions: {
-            path: path.resolve(__dirname, 'src/js/postcss.config.js'),
+            path: `./postcss.config.js`,
           },
         },
       },
@@ -112,23 +113,34 @@ module.exports = (env, argv) => {
   }
 
   const plugins = () => {
+    const miniCss = env.WEBPACK_SERVE ? [] : [
+      new MiniCssExtractPlugin({
+        filename: `assets/css/${generatorName('styles', 'css')}`,
+      }),
+    ]
+
     return [
       new HtmlWebpackPlugin({
-        template: './index.html',
+        template: `${PATHS.src}/index.html`,
         filename: 'index.html',
+        inject: true,
         minify: isProdMode,
       }),
-      new MiniCssExtractPlugin({
-        filename: `css/${generatorName('styles', 'css')}`,
-      }),
+      ...miniCss,
     ]
   }
 
   const optimization = () => {
     const config = {
-      // runtimeChunk: 'single',
       splitChunks: {
-        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            name: 'vendors',
+            test: /node_modules/,
+            chunks: 'all',
+            enforce: true,
+          }
+        },
       },
     }
 
@@ -158,15 +170,16 @@ module.exports = (env, argv) => {
       output: {
         filename: filename('bundle.js', './'),
         path: PATHS.dist,
-        assetModuleFilename: `resources/${generatorBaseName()}`,
+        assetModuleFilename: `assets/other/${generatorBaseName()}`,
         clean: true,
       },
       resolve: {
         extensions: ['ts', '...'],
         alias: {
-          'src': path.resolve(__dirname, 'src'),  //    src/myFile.cpp
-          Utilities: path.resolve(__dirname, 'src/utilities/'),
-          Templates: path.resolve(__dirname, 'src/templates/'),
+          'src': PATHS.src,       //    src/myFile.cpp
+          '~': PATHS.src,
+          Utilities: `${PATHS.src}/utilities/`,
+          Templates: `${PATHS.src}/templates/`,
         }
       },
       optimization: optimization(),
