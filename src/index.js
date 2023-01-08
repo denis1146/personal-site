@@ -1,6 +1,5 @@
 // import MyHtml from './index.html'
-import MyStyles from './assets/styles/styles.css'
-import MyStyles_1 from './assets/styles/styles_1.scss'
+import MyStyles from './assets/styles/styles.scss'
 
 
 /////////////////
