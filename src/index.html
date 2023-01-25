@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,27 +10,51 @@
   <meta name="keywords" content="">
   <meta name="robots" content="none">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P">
   <link rel="shortcut icon" href="assets/img/favicon.ico">
   <title>Personal site</title>
 </head>
+
 <body>
   <div class="warapper">
     <header class="header">
-      <nav></nav>
+      <div class="header__container">
+        <a href="#" class="header__logo">PS</a>
+        <nav class="header__menu menu">
+          <ul class="menu__list">
+            <li class="menu__item">
+              <a class="menu__link" href="#">Games</a>
+            </li>
+            <li class="menu__item">
+              <a class="menu__link" href="#">Single-page sites</a>
+            </li>
+            <li class="menu__item">
+              <a class="menu__link" href="#">Controls</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
+
     <main class="main">
-      <div class="main__item">
-        Games
-      </div>
-      <div class="main__item">
-        Single-page sites
-      </div>
-      <div class="main__item">
-        Controls
+      <div class="main__container">
+        <a href="#" class="main__item button">
+          Games
+        </br>
+        <a href="#" class="main__item button">
+          Single-page sites
+        </a>
+        <a href="#" class="main__item button">
+          Controls
+        </a>
+        <a href="#" class="main__item button">
+          Test
+        </a>
       </div>
     </main>
+
     <footer class="footer">
+      <div class="footer__social">
+      </div>
     </footer>
   </div>
 </body>

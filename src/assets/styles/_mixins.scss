@@ -1,14 +1,27 @@
-$baseFontSize: 16px !default;
+$baseFontSize: 16px;
 
-// px to rem
-@function rem($pixels, $context: $baseFontSize) {
+// px to parts
+@function parts($pixels, $context: $baseFontSize) {
   @if (unitless($pixels)) {
     $pixels: $pixels * 1px;
   }
-
   @if (unitless($context)) {
     $context: $context * 1px;
   }
+  @return calc($pixels / $context);
+}
 
-  @return $pixels / $context * 1rem;
+// px to rem
+@function rem($pixels, $context: $baseFontSize) {
+  @return parts($pixels, $context)* 1rem;
+}
+
+// px to %
+@function prc($pixels, $context: $baseFontSize) {
+  @return parts($pixels, $context)* 100%;
+}
+
+// px to em
+@function em($pixels, $context: $baseFontSize) {
+  @return parts($pixels, $context)* 1em;
 }

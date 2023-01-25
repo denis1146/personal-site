@@ -1,43 +1,145 @@
 @import 'reset';
 @import 'fonts';
-@import 'vars';
 @import 'mixins';
+@import 'vars';
+
+
+@mixin CONTAINER {
+  max-width: rem(1440);
+  margin: 0 auto;
+}
 
 body {
+  background-color: $primary-color-4a;
   font-family: $mainFont;
+  font-size: $mainFontSize;
   color: $mainFontColor;
   font-weight: $mainFontWeight;
   line-height: $mainLineHeight;
 }
 
 .warapper {
+  width: 100%;
   min-height: 100%;
   overflow: hidden;
+
   display: flex;
   flex-direction: column;
 }
 
+// ===========================================================================
+
 .header {
+  background-color: transparentize($primary-color-2, 0.92);
+  // position: absolute;
+  // width: 100%;
+  // top: 0;
+  // left: 0;
+  // z-index: 50;
+
+  &__container {
+    @include CONTAINER;
+    display: flex;
+    // justify-content: space-between;
+    align-items: stretch;
+    color: $primary-color;
+    min-height: rem(82);
+
+    @media (min-width: 562px) {
+      min-height: rem(100);
+    }
+    @media (min-width: 515px) {
+      align-items: center;
+    }
+  }
+  &__logo {
+    font-size: rem(34);
+    font-weight: 600;
+    letter-spacing: rem(2);
+    display: inline-block;
+	  padding: rem(5) rem(15);
+
+    &:active {
+      color: $primary-color-2;
+    }
+  }
+  &__menu {
+    margin: 0 rem(40) 0 rem(32);
+    padding: rem(5) 0;
+
+    @media (min-width: 562px) {
+      margin: 0 rem(40) 0 rem(72);
+    }
+  }
 }
+
+.menu {
+  font-size: rem(22);
+
+  @media (min-width: 562px) {
+    font-size: rem(20);
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item {
+  }
+  &__item:not(:last-child) {
+    margin: 0 rem(24) 0 0;
+  }
+  &__link {
+    transition: all 0.2s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+    &:active {
+      color: $primary-color-2;
+    }
+  }
+}
+
+// ===========================================================================
 
 .main {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $primary-color-3a;
-  font-size: $mainFontSize;
 
+  &__container {
+    @include CONTAINER;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
   &__item {
-    background-color: $primary-color;
-    padding: 30px;
-    margin: 20px;
-    font-weight: 500;
-    border: 1px solid #000;
-    border-radius: 15px;
-    // text-transform: uppercase;
+    display: inline-block;
+    margin: rem(20);
   }
 }
 
+.button {
+  background-color: $primary-color;
+  padding: rem(30);
+  border: 1px solid #000;
+  border-radius: rem(25);
+  box-shadow: rem(3) rem(4) rem(5) rgba(0, 0, 0, 0.7);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary-color-active;
+  }
+  &:active {
+    box-shadow: rem(0) rem(2) rem(3) rgba(0, 0, 0, 0.7);
+  }
+}
+
+// ===========================================================================
+
 .footer {
+  font-size: rem(18);
+  color: #737373
 }

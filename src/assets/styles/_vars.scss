@@ -1,14 +1,16 @@
 $mainFont                   : 'Roboto';
 $mainFontColor              : #000;
-$mainFontSize               : rem(24);
-$mainFontWeight             : 400;
-$mainLineHeight             : 1;
+$mainFontSizePx             : 24px;
+$mainFontSize               : rem($mainFontSizePx);
+$mainFontWeight             : 500;
+$mainLineHeight             : parts($mainFontSizePx);
 
 $primary-color              : #27dfa2;
+$primary-color-active       : #0ee79f;
 $primary-color-1            : #b6a1ed;
 $primary-color-2            : #8aedcc;
 $primary-color-3            : #ed8a72;
 $primary-color-4            : #ede47e;
 // secondary-color
 
-$primary-color-3a: transparentize($primary-color-4, 0.8);
+$primary-color-4a: transparentize($primary-color-4, 0.8);
