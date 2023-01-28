@@ -1,9 +1,9 @@
 $mainFont                   : 'Roboto';
 $mainFontColor              : #000;
-$mainFontSizePx             : 24px;
-$mainFontSize               : rem($mainFontSizePx);
+$mainFontSize               : 17;
+$mainFontSizeMax            : 27;
 $mainFontWeight             : 500;
-$mainLineHeight             : parts($mainFontSizePx);
+$mainLineHeight             : parts($mainFontSize * 1px);
 
 $primary-color              : #27dfa2;
 $primary-color-active       : #0ee79f;
