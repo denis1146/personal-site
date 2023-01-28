@@ -25,3 +25,48 @@ $baseFontSize: 16px;
 @function em($pixels, $context: $baseFontSize) {
   @return parts($pixels, $context)* 1em;
 }
+
+// This mixin dynamically changes the value of $property from $minValue
+// to $maxValue for the corresponding viewport value.
+// The width range of the viewport is set by the properties
+// $minWidthViewport and $maxWidthViewport.
+@mixin adaptiveValueVp($property, $minValue, $maxValue,
+  $maxWidthViewport, $minWidthViewport: 320) {
+  #{$property}: calc($minValue * 1px +
+    ($maxValue - $minValue) * (100vw - $minWidthViewport * 1px) /
+    ($maxWidthViewport - $minWidthViewport));
+}
+
+// Adaptive value in rem
+@mixin adaptiveValueVpRem($property, $minValue, $maxValue,
+  $maxWidthViewport, $minWidthViewport: 320) {
+  #{$property}: calc(rem($minValue) +
+    ($maxValue - $minValue) * (100vw - rem($minWidthViewport)) /
+     ($maxWidthViewport - $minWidthViewport));
+}
+
+//  Adaptive value inside the container
+@mixin adaptiveValue($property, $minValue, $maxValue,
+  $maxWidthContainer, $minWidthContainer: 320) {
+  #{$property}: $minValue * 1px;
+  @media (min-width: ($minWidthContainer * 1px)) {
+    @include adaptiveValueVp($property, $minValue, $maxValue,
+    $maxWidthContainer, $minWidthContainer);
+  }
+  @media (min-width: ($maxWidthContainer * 1px)) {
+    #{$property}: $maxValue * 1px;
+  }
+}
+
+// Adaptive value in rem inside the container
+@mixin adaptiveValueRem($property, $minValue, $maxValue,
+  $maxWidthContainer, $minWidthContainer: 320) {
+  #{$property}: rem($minValue);
+  @media (min-width: ($minWidthContainer * 1px)) {
+    @include adaptiveValueVpRem($property, $minValue, $maxValue,
+    $maxWidthContainer, $minWidthContainer);
+  }
+  @media (min-width: ($maxWidthContainer * 1px)) {
+    #{$property}: rem($maxValue * 1px);
+  }
+}
