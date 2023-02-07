@@ -1,5 +1,6 @@
 // import MyHtml from './index.html'
 import MyStyles from './assets/styles/styles.scss'
+import RunOrLose from './assets/html/games/RunOrLose/styles/style.scss'
 
 
 /////////////////

@@ -134,6 +134,12 @@ module.exports = (env, argv) => {
         inject: true,
         minify: isProdMode,
       }),
+      new HtmlWebpackPlugin({
+        template: `${PATHS.src}/${PATHS.games}/RunOrLose/RunOrLose.html`,
+        filename: `${PATHS.games}/RunOrLose/RunOrLose.html`,
+        inject: true,
+        minify: isProdMode,
+      }),
       ...miniCss,
     ]
   }
