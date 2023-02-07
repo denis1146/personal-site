@@ -20,7 +20,9 @@ module.exports = (env, argv) => {
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
     dist: path.resolve(__dirname, 'dist'),
-    assets: path.resolve(__dirname, 'src/assets'),
+    assets: 'assets',
+    html: 'assets/html',
+    games: 'assets/html/games',
   }
 
   const SEPARATOR = '/';
@@ -123,6 +125,12 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: `${PATHS.src}/index.html`,
         filename: 'index.html',
+        inject: true,
+        minify: isProdMode,
+      }),
+      new HtmlWebpackPlugin({
+        template: `${PATHS.src}/${PATHS.games}/games.html`,
+        filename: `${PATHS.games}/games.html`,
         inject: true,
         minify: isProdMode,
       }),
