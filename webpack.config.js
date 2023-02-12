@@ -21,8 +21,17 @@ module.exports = (env, argv) => {
     src: path.resolve(__dirname, 'src'),
     dist: path.resolve(__dirname, 'dist'),
     assets: 'assets',
-    html: 'assets/html',
-    games: 'assets/html/games',
+    html: 'html',
+    pug: 'pug',
+    scripts: 'scripts',
+    styles: 'styles',
+    other: 'assets/other',
+    games: 'html/games',
+  }
+
+  const SUBPROJECTS_PATH = {
+    subprojects: 'subprojects',
+    games: 'subprojects/games',
   }
 
   const SEPARATOR = '/';
@@ -117,13 +126,13 @@ module.exports = (env, argv) => {
   const plugins = () => {
     const miniCss = env.WEBPACK_SERVE ? [] : [
       new MiniCssExtractPlugin({
-        filename: `assets/css/${generatorName('styles', 'css')}`,
+        filename: `${PATHS.styles}/${generatorName('styles', 'css')}`,
       }),
     ]
 
     return [
       new HtmlWebpackPlugin({
-        template: `${PATHS.src}/index.html`,
+        template: `${PATHS.src}/${PATHS.html}/index.html`,
         filename: 'index.html',
         inject: true,
         minify: isProdMode,
@@ -134,12 +143,15 @@ module.exports = (env, argv) => {
         inject: true,
         minify: isProdMode,
       }),
+
+      // Subprojects
       new HtmlWebpackPlugin({
-        template: `${PATHS.src}/${PATHS.games}/RunOrLose/RunOrLose.html`,
-        filename: `${PATHS.games}/RunOrLose/RunOrLose.html`,
+        template: `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/RunOrLose.html`,
+        filename: `${SUBPROJECTS_PATH.games}/RunOrLose/RunOrLose.html`,
         inject: true,
         minify: isProdMode,
       }),
+
       ...miniCss,
     ]
   }
@@ -184,7 +196,7 @@ module.exports = (env, argv) => {
       output: {
         filename: filename('bundle.js', './'),
         path: PATHS.dist,
-        assetModuleFilename: `assets/other/${generatorBaseName()}`,
+        assetModuleFilename: `${PATHS.other}/${generatorBaseName()}`,
         clean: true,
       },
       resolve: {

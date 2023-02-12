@@ -1,6 +1,6 @@
-// import MyHtml from './index.html'
-import MyStyles from './assets/styles/styles.scss'
-import RunOrLose from './assets/html/games/RunOrLose/styles/style.scss'
+// import MyHtml from './html/index.html'
+import MyStyles from './styles/styles.scss'
+import RunOrLose from './subprojects/games/RunOrLose/styles/style.scss'
 
 
 /////////////////
@@ -16,7 +16,7 @@ import RunOrLose from './assets/html/games/RunOrLose/styles/style.scss'
 
 /////////////////
 
-import './js/common.js'
+import './scripts/common.js'
 
 
 const i = 555;
