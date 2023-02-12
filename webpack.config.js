@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const PugPlugin = require('pug-plugin');
 // const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 // const TerserWebpackPlugin = require('terser-webpack-plugin');
 
@@ -75,6 +76,10 @@ module.exports = (env, argv) => {
         loader: 'html-loader',
       },
       {
+        test: /\.pug$/i,
+        loader: PugPlugin.loader,
+      },
+      {
         test: /\.css$/i,
         use: cssLoaders(),
         resourceQuery: { not: [/move/, /resource/, /raw/] },
@@ -118,7 +123,7 @@ module.exports = (env, argv) => {
       {
         test: /\.js$/i,
         loader: 'babel-loader',
-        exclude: '/node_modules',
+        exclude: /node_modules/,
       },
     ]
   }
