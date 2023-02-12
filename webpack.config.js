@@ -126,7 +126,13 @@ module.exports = (env, argv) => {
   const plugins = () => {
     const miniCss = env.WEBPACK_SERVE ? [] : [
       new MiniCssExtractPlugin({
-        filename: `${PATHS.styles}/${generatorName('styles', 'css')}`,
+        filename: ({ chunk }) => {
+          return (chunk.filenameTemplate ?
+              chunk.filenameTemplate.substr(0, chunk.filenameTemplate.lastIndexOf('/')) + '/' :
+              ''
+            ) +
+            `${PATHS.styles}/${generatorName('styles', 'css')}`
+        }
       }),
     ]
 
@@ -146,8 +152,8 @@ module.exports = (env, argv) => {
 
       // Subprojects
       new HtmlWebpackPlugin({
-        template: `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/RunOrLose.html`,
-        filename: `${SUBPROJECTS_PATH.games}/RunOrLose/RunOrLose.html`,
+        template: `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/index.html`,
+        filename: `${SUBPROJECTS_PATH.games}/RunOrLose/index.html`,
         inject: true,
         minify: isProdMode,
       }),
@@ -191,10 +197,18 @@ module.exports = (env, argv) => {
           import: [
             './index.js',
           ],
-        }
+        },
+
+        // Subprojects
+        runOrLose: {
+          import: [
+            `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/index.js`,
+          ],
+          filename: `${SUBPROJECTS_PATH.games}/RunOrLose/${generatorBaseName('js')}`,
+        },
       },
       output: {
-        filename: filename('bundle.js', './'),
+        filename: generatorBaseName('js'),
         path: PATHS.dist,
         assetModuleFilename: `${PATHS.other}/${generatorBaseName()}`,
         clean: true,
