@@ -1,0 +1,13 @@
+mixin header(isIndexHtml = false)
+  - var currecntDir = isIndexHtml ? './' : '../'
+  header.header
+    .header__container
+      a.header__logo(href=`${currecntDir}index.html`) PS
+      nav.header__menu.menu
+        ul.menu__list
+          li.menu__item
+            a.menu__link(href=`${currecntDir}pages/games.html`) Games
+          li.menu__item
+            a.menu__link(href='#') Single-page sites
+          li.menu__item
+            a.menu__link(href='#') Controls

@@ -1,0 +1,62 @@
+block vars
+  - var title = typeof title !== 'undefined' ? title : null
+  - var styles = typeof styles !== 'undefined' ? styles : []
+  - var scripts = typeof scripts !== 'undefined' ? scripts : []
+  -
+    var html = {
+      attrs: {
+        lang: 'en',
+      },
+      classes: [],
+    }
+  -
+    var body = {
+      attrs: {},
+      classes: [],
+    }
+  -
+    var meta = {
+      charset: 'utf-8',
+      XUACompatible: 'IE=edge',
+      viewport: 'width=device-width, initial-scale=1.0',
+      description: null,
+      keywords: [],
+      robots: 'none',
+    }
+  -
+    link = {
+      shortcutIcon: null
+    }
+
+
+doctype html
+html(class=html.classes)&attributes(html.attrs)
+  head
+    block meta
+      if meta.charset
+        meta(charset=meta.charset)
+      if meta.XUACompatible
+        meta(http-equiv='X-UA-Compatible' content=meta.XUACompatible)
+      if meta.viewport
+        meta(name='viewport' content=meta.viewport)
+      if meta.description
+        meta(name='description' content=meta.description)
+      if meta.robots
+        meta(name='robots' content=meta.robots)
+
+    block link
+      if link.shortcutIcon
+        link(rel='shortcut icon' href=require(link.shortcutIcon))
+
+    block styles
+      each val in styles
+        link(rel='stylesheet' href=require(val))
+
+    if title
+      title= title
+
+  body(class=body.classes)&attributes(body.attrs)
+    block content
+    block scripts
+      each val in scripts
+        script(defer='defer' src=require(val))

@@ -1,0 +1,12 @@
+extends ../utils/_layout.pug
+
+include _head.pug
+include _header.pug
+include _footer.pug
+
+block content
+  .wrapper
+    block header
+    block main
+    block footer
+      +footer()

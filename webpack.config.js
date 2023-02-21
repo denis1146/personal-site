@@ -7,16 +7,10 @@ module.exports = (env, argv) => {
   console.log(argv);
   console.log('==============================================================================');
 
-  // const webpack = require('webpack');
   const path = require('path');
-  const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
   const PugPlugin = require('pug-plugin');
-// const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
-// const TerserWebpackPlugin = require('terser-webpack-plugin');
 
   const isDevMode = argv.mode === 'development';
-  const isProdMode = !isDevMode;
 
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
@@ -28,6 +22,7 @@ module.exports = (env, argv) => {
     styles: 'styles',
     other: 'assets/other',
     games: 'html/games',
+    pages: 'pug/pages',
   }
 
   const SUBPROJECTS_PATH = {
@@ -46,10 +41,6 @@ module.exports = (env, argv) => {
 
   const cssLoaders = extra => {
     const loaders = [
-      env.WEBPACK_SERVE ? 'style-loader' :
-      {
-        loader: MiniCssExtractPlugin.loader,
-      },
       'css-loader',
       {
         loader: 'postcss-loader',
@@ -69,10 +60,12 @@ module.exports = (env, argv) => {
     return loaders;
   }
 
+  const resourceQueryRules = { not: [/move/, /resource/, /raw/] }
   const moduleRules = () => {
     return [
       {
         test: /\.html$/i,
+        resourceQuery: resourceQueryRules,
         loader: 'html-loader',
       },
       {
@@ -82,17 +75,16 @@ module.exports = (env, argv) => {
       {
         test: /\.css$/i,
         use: cssLoaders(),
-        resourceQuery: { not: [/move/, /resource/, /raw/] },
+        resourceQuery: resourceQueryRules,
       },
       {
         test: /\.s[ac]ss$/i,
         use: cssLoaders('sass-loader'),
-        resourceQuery: { not: [/move/, /resource/, /raw/] },
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/i,
         type: 'asset/resource',
-        resourceQuery: { not: [/move/, /resource/, /raw/] },
+        resourceQuery: resourceQueryRules,
         generator: {
           filename: filename(),
         },
@@ -100,7 +92,7 @@ module.exports = (env, argv) => {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
-        resourceQuery: { not: [/move/, /resource/, /raw/] },
+        resourceQuery: resourceQueryRules,
         generator: {
           filename: filename(),
         },
@@ -128,42 +120,26 @@ module.exports = (env, argv) => {
     ]
   }
 
+  const keepPugFolderStructure = (ext, relativePath, generatorName) => {
+    return pathData => {
+      const sourceFile = pathData.filename;
+      const relativeFile = path.relative(`${relativePath}`, sourceFile);
+      const { dir, name } = path.parse(relativeFile);
+      return `${dir}/${generatorName(name, ext)}`;
+    }
+  }
+
   const plugins = () => {
-    const miniCss = env.WEBPACK_SERVE ? [] : [
-      new MiniCssExtractPlugin({
-        filename: ({ chunk }) => {
-          return (chunk.filenameTemplate ?
-              chunk.filenameTemplate.substr(0, chunk.filenameTemplate.lastIndexOf('/')) + '/' :
-              ''
-            ) +
-            `${PATHS.styles}/${generatorName('styles', 'css')}`
-        }
-      }),
-    ]
-
     return [
-      new HtmlWebpackPlugin({
-        template: `${PATHS.src}/${PATHS.html}/index.html`,
-        filename: 'index.html',
-        inject: true,
-        minify: isProdMode,
+      new PugPlugin({
+        pretty: isDevMode,
+        filename: keepPugFolderStructure('html', `${PATHS.src}/${PATHS.pug}`,
+          (name, ext) => name + addExt(ext)
+        ),
+        css: {
+          filename: keepPugFolderStructure('css', `${PATHS.src}`, generatorName),
+        },
       }),
-      new HtmlWebpackPlugin({
-        template: `${PATHS.src}/${PATHS.games}/games.html`,
-        filename: `${PATHS.games}/games.html`,
-        inject: true,
-        minify: isProdMode,
-      }),
-
-      // Subprojects
-      new HtmlWebpackPlugin({
-        template: `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/index.html`,
-        filename: `${SUBPROJECTS_PATH.games}/RunOrLose/index.html`,
-        inject: true,
-        minify: isProdMode,
-      }),
-
-      ...miniCss,
     ]
   }
 
@@ -173,7 +149,7 @@ module.exports = (env, argv) => {
         cacheGroups: {
           vendor: {
             name: 'vendors',
-            test: /node_modules/,
+            test: /[\\/]node_modules[\\/].+\.(js|ts)$/,
             chunks: 'all',
             enforce: true,
           }
@@ -181,36 +157,41 @@ module.exports = (env, argv) => {
       },
     }
 
-    // if (isProdMode) {
-    //   config.minimizer = [
-    //     new OptimizeCssAssetWebpackPlugin(),
-    //     new TerserWebpackPlugin()
-    //   ]
-    // }
-
     return config;
+  }
+
+  const runOrLose = isDevMode ? {
+    runOrLose: {
+      import: [
+        `./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.pug`,
+        `./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.js`,
+      ],
+      filename: `${SUBPROJECTS_PATH.games}/RunOrLose/${generatorBaseName('js')}`,
+    }
+  }
+  : []
+
+  const entryPug = {
+    main: {
+      import: ['pug/pages/index.pug'],
+      filename: 'index.html',
+    },
+    games: `pug/pages/games.pug`,
+  }
+
+  const entrySubprojects = {
+    ...runOrLose,
   }
 
   return [
     {
       name: 'main',
       target: 'browserslist',
-      mode: 'production',
-      context: PATHS.src, //    ./myFile.cpp
+      mode: argv.mode,
+      context: PATHS.src,
       entry: {
-        main: {
-          import: [
-            './index.js',
-          ],
-        },
-
-        // Subprojects
-        runOrLose: {
-          import: [
-            `${PATHS.src}/${SUBPROJECTS_PATH.games}/RunOrLose/index.js`,
-          ],
-          filename: `${SUBPROJECTS_PATH.games}/RunOrLose/${generatorBaseName('js')}`,
-        },
+        ...entryPug,
+        ...entrySubprojects,
       },
       output: {
         filename: generatorBaseName('js'),
@@ -221,10 +202,8 @@ module.exports = (env, argv) => {
       resolve: {
         extensions: ['ts', '...'],
         alias: {
-          'src': PATHS.src,       //    src/myFile.cpp
+          'src': PATHS.src,
           '~': PATHS.src,
-          Utilities: `${PATHS.src}/utilities/`,
-          Templates: `${PATHS.src}/templates/`,
         }
       },
       optimization: optimization(),
