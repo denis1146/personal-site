@@ -133,7 +133,7 @@ module.exports = (env, argv) => {
     return [
       new PugPlugin({
         pretty: isDevMode,
-        filename: keepPugFolderStructure('html', `${PATHS.src}/${PATHS.pug}`,
+        filename: keepPugFolderStructure('html', `${PATHS.src}`,
           (name, ext) => name + addExt(ext)
         ),
         css: {
@@ -160,27 +160,21 @@ module.exports = (env, argv) => {
     return config;
   }
 
-  const runOrLose = isDevMode ? {
-    runOrLose: {
-      import: [
-        `./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.pug`,
-        `./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.js`,
-      ],
-      filename: `${SUBPROJECTS_PATH.games}/RunOrLose/${generatorBaseName('js')}`,
-    }
-  }
-  : []
-
   const entryPug = {
     main: {
       import: ['pug/pages/index.pug'],
       filename: 'index.html',
     },
-    games: `pug/pages/games.pug`,
+    games: {
+      import: `pug/pages/games.pug`,
+      filename: 'pages/games.html',
+    }
   }
 
   const entrySubprojects = {
-    ...runOrLose,
+    runOrLose: {
+      import: [`./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.pug`],
+    },
   }
 
   return [

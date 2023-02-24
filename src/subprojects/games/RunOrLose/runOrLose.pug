@@ -1,4 +1,70 @@
-- var styles = './styles/style.scss'
+extends ../../../pug/utils/_layout.pug
 
-link(rel='stylesheet' href=require(styles))
-//- img.github__img(src=require('/subprojects/games/RunOrLose/img/favicon.ico') alt='')
+append vars
+  - var title = 'Run or lose'
+  - var styles = ['/subprojects/games/RunOrLose/styles/style.scss']
+  - link.shortcutIcon = '/subprojects/games/RunOrLose/img/favicon.ico'
+
+block content
+  .wrapperRunOrLose
+    section#start.start-page
+      .start-page__title
+        span R
+        span u
+        span n
+        span
+        span O
+        span r
+        span
+        span L
+        span o
+        span s
+        span e
+      a.start-page__button.button-start(href='#game')
+        .game
+          .game__items
+            .game__item.game__item--1.game__item--buttom
+            .game__item.game__item--2.game__item--buttom
+            .game__item.game__item--3.game__item--buttom
+            .game__item.game__item--4.game__item--buttom
+            .game__item.game__item--5.game__item--buttom
+            .game__item.game__item--6.game__item--buttom
+            .game__item.game__item--7.game__item--buttom
+            .game__item.game__item--8.game__item--buttom
+            .game__item.game__item--9.game__item--buttom
+            .game__item.game__item--10.game__item--buttom
+            .game__item.game__item--11.game__item--buttom
+            .game__item.game__item--12.game__item--buttom
+            .game__item.game__item--13.game__item--buttom
+        .button-start__text
+          | Start
+    section#game.game-page
+      .game
+        .game__body
+          .game__items
+            .game__item.game__item--1
+            .game__item.game__item--2
+            .game__item.game__item--3
+            .game__item.game__item--4
+            .game__item.game__item--5
+            .game__item.game__item--6
+            .game__item.game__item--7
+            .game__item.game__item--8
+            .game__item.game__item--9
+            .game__item.game__item--10
+            .game__item.game__item--11
+            .game__item.game__item--12
+            .game__item.game__item--13
+          .game__counter
+          .game__result
+            | Result:
+            span
+      .game-page__win Winning!
+    section.info
+      a.info__icon(href='#info' title='Rules of the game') i
+      #info.info__body
+        a.info__close(href='#start') X
+        .info__text
+          p Click the "Start" button and the game will start.
+          p Run away from the rectangles within a minute and you will win.
+          p When you leave the field, the game will start from the beginning.
