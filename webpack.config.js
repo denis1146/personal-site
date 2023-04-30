@@ -60,6 +60,42 @@ module.exports = (env, argv) => {
     return loaders;
   }
 
+  const babelOptions = preset => {
+    const opts = {
+      presets: [
+        '@babel/preset-env'
+      ],
+    }
+
+    if (preset) {
+      opts.presets.push(preset)
+    }
+
+    return opts
+  }
+
+  const jsLoaders = () => {
+    const loaders = [{
+      loader: 'babel-loader',
+      options: babelOptions(),
+    }]
+
+    return loaders
+  }
+
+  const tsLoaders = () => {
+    if (isDevMode) {
+      return {
+        loader: 'ts-loader',
+      }
+    }
+
+    return {
+      loader: 'babel-loader',
+      options: babelOptions('@babel/preset-typescript'),
+    }
+  }
+
   const resourceQueryRules = { not: [/move/, /resource/, /raw/] }
   const moduleRules = () => {
     return [
@@ -114,7 +150,12 @@ module.exports = (env, argv) => {
       },
       {
         test: /\.js$/i,
-        loader: 'babel-loader',
+        use: jsLoaders(),
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts$/i,
+        use: tsLoaders(),
         exclude: /node_modules/,
       },
     ]
