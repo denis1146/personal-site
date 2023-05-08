@@ -28,6 +28,7 @@ module.exports = (env, argv) => {
   const SUBPROJECTS_PATH = {
     subprojects: 'subprojects',
     games: 'subprojects/games',
+    websites: 'subprojects/websites',
   }
 
   const SEPARATOR = '/';
@@ -166,6 +167,9 @@ module.exports = (env, argv) => {
       const sourceFile = pathData.filename;
       const relativeFile = path.relative(`${relativePath}`, sourceFile);
       const { dir, name } = path.parse(relativeFile);
+      console.log(`=>>> keepPugFolderStructure: name.ext = ${`${name}.${ext}`}; dir = ${dir};
+      sourceFile = ${pathData.filename};
+      generatorName = ${generatorName(name, ext)}`)
       return `${dir}/${generatorName(name, ext)}`;
     }
   }
@@ -179,6 +183,9 @@ module.exports = (env, argv) => {
         ),
         css: {
           filename: keepPugFolderStructure('css', `${PATHS.src}`, generatorName),
+        },
+        js: {
+          filename: keepPugFolderStructure('js', `${PATHS.src}`, generatorName),
         },
       }),
     ]
@@ -207,14 +214,21 @@ module.exports = (env, argv) => {
       filename: 'index.html',
     },
     games: {
-      import: `pug/pages/games.pug`,
+      import: 'pug/pages/games.pug',
       filename: 'pages/games.html',
+    },
+    websites: {
+      import: 'pug/pages/websites.pug',
+      filename: 'pages/websites.html',
     }
   }
 
   const entrySubprojects = {
     runOrLose: {
       import: [`./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.pug`],
+    },
+    fullscreenSliderMaterialize: {
+      import: [`./${SUBPROJECTS_PATH.websites}/FullscreenSliderMaterialize/fullscreenSliderMaterialize.pug`],
     },
   }
 

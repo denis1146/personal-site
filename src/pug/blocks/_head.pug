@@ -1,4 +1,10 @@
 append vars
   - var title = 'Personal site'
-  - var styles = ['/styles/styles.scss']
-  - link.shortcutIcon = '/assets/images/favicon.ico'
+  - var styles = [require('/styles/styles.scss')]
+  -
+    var scripts = [
+      '/scripts/common.js',
+      '/scripts/test.ts',
+    ]
+
+  - link.shortcutIcon = require('/assets/images/favicon.ico')

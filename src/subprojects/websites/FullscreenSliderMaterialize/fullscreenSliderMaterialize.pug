@@ -1,0 +1,59 @@
+extends /pug/utils/_layout.pug
+include /pug/utils/utility.pug
+
+append vars
+  -
+    var title = 'Fullscreen Slider (Materialize)'
+    var styles = [require('/styles/_reset.scss'),
+      'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css',
+      require('./styles/styles.scss'),
+    ]
+    var extScripts = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js']
+    var scripts = ['/subprojects/websites/FullscreenSliderMaterialize/scripts/script.js',]
+
+block headEnd
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+mixin title()
+        h3.yellow-text Surfing in Bali
+
+mixin text()
+  if block
+    h6.lime-text.text-lighten-4
+      block
+
+block content
+  .slider.fullscreen
+    ul.slides
+      li
+        img(src='https://live.staticflickr.com/6163/6162682072_5046359061_o.jpg')
+        .caption.left-align
+          +title()
+          +text()
+            +attributingAnImage('Bali Kuta Beach', 'https://www.flickr.com/photos/vasenka/6162682072/',
+              'VasenkaPhotography', 'https://www.flickr.com/people/vasenka/',
+              'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
+      li
+        img(src='https://live.staticflickr.com/1758/41809281824_b1484545e3_o.jpg')
+        .caption.center-align
+          +title()
+          +text()
+            +attributingAnImage('Pro Surfing at Uluwatu', 'https://www.flickr.com/photos/162105766@N06/41809281824/',
+              'Wavehavenbali', 'https://www.flickr.com/people/162105766@N06/',
+              'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
+      li
+        img(src='https://live.staticflickr.com/5035/5848589030_d23bb43784_o.jpg')
+        .caption.right-align
+          +title()
+          +text()
+            +attributingAnImage('Surfs up', 'https://www.flickr.com/photos/gingerchrismc/5848589030/',
+              'Gingerchrismc', 'https://www.flickr.com/people/gingerchrismc/',
+              'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
+      li
+        img(src='https://images.unsplash.com/photo-1541681474356-5c6ad40c7990?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')
+        .caption.center-align
+          +title()
+          +text()
+            +attributingAnImage('Bali Beach Vibes', 'https://unsplash.com/photos/eJG25BI6qI8',
+                'Julian Vinci', 'https://unsplash.com/@juliovie',
+                'Unsplash License', 'https://unsplash.com/license')
