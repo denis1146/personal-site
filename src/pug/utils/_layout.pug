@@ -2,6 +2,7 @@ block vars
   - var title = typeof title !== 'undefined' ? title : null
   - var styles = typeof styles !== 'undefined' ? styles : []
   - var scripts = typeof scripts !== 'undefined' ? scripts : []
+  - var extScripts = typeof extScripts !== 'undefined' ? extScripts : []
   -
     var html = {
       attrs: {
@@ -32,6 +33,8 @@ block vars
 doctype html
 html(class=html.classes)&attributes(html.attrs)
   head
+    block headBegin
+
     block meta
       if meta.charset
         meta(charset=meta.charset)
@@ -46,17 +49,21 @@ html(class=html.classes)&attributes(html.attrs)
 
     block link
       if link.shortcutIcon
-        link(rel='shortcut icon' href=require(link.shortcutIcon))
+        link(rel='shortcut icon' href=link.shortcutIcon)
 
     block styles
       each val in styles
-        link(rel='stylesheet' href=require(val))
+        link(type='text/css' rel='stylesheet' href=val)
 
     if title
       title= title
 
+    block headEnd
+
   body(class=body.classes)&attributes(body.attrs)
     block content
     block scripts
+      each val in extScripts
+        script(type="text/javascript" defer='defer' src=val)
       each val in scripts
-        script(defer='defer' src=require(val))
+        script(type="text/javascript" defer='defer' src=require(val))
