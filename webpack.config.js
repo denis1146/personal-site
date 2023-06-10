@@ -232,6 +232,9 @@ module.exports = (env, argv) => {
     fullscreenSliderMaterialize: {
       import: [`./${SUBPROJECTS_PATH.websites}/FullscreenSliderMaterialize/fullscreenSliderMaterialize.pug`],
     },
+    randomColorGenerator: {
+      import: [`./${SUBPROJECTS_PATH.websites}/RandomColorGenerator/randomColorGenerator.pug`],
+    }
   }
 
   return [

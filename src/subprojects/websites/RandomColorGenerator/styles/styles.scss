@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import '../../../../styles/mixins';
+
+$mainFont                   : 'Roboto', sans-serif;
+$mainFontColor              : #f1e0e0ff;
+$mainFontSize               : 18;
+$mainFontSizeMax            : 28;
+$mainFontWeight             : 500;
+$mainLineHeight             : parts($mainFontSize * 1px);
+$mainBackgroundColor        : #f8ae40ff;
+
+$maxWidthContainer          : 1440;
+
+$mBp1:  319.98px;
+$mBp1L: 424.98px;
+$mBp2:  479.98px;
+$mBp3:  767.98px;
+$mBp4:  991.98px;
+$mBp1:  $maxWidthContainer + 12px;
+
+
+@mixin CONTAINER {
+  max-width: rem($maxWidthContainer);
+  margin: 0 auto;
+  padding: 0 rem(15);
+}
+
+body {
+  background-color: rgb(235, 180, 97);
+  height: 100%;
+  line-height: $mainLineHeight;
+  font: {
+    family: $mainFont;
+    weight: $mainFontWeight;
+  };
+  @include adaptiveValueRem("font-size", 15, 18, $maxWidthContainer);
+  color: $mainFontColor;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: darken($mainBackgroundColor, 3%);
+
+  &__container {
+    @include CONTAINER;
+    background-color: darken($mainBackgroundColor, 6%);
+    padding: rem(8) rem(14);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__title {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 0 rem(10);
+    @include adaptiveValueRem("font-size", $mainFontSize, $mainFontSizeMax, $maxWidthContainer);
+  }
+  &__btn{
+  }
+}
+
+.button {
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__body {
+    @include adaptiveValueRem("padding", 15, 10, $maxWidthContainer);
+    text-transform: uppercase;
+    text-align: center;
+    border: rem(2) solid $mainFontColor;
+    border-radius: 15%;
+    overflow: hidden;
+    transition: all 0.3s ease 0s;
+    border-color: $mainFontColor;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    &_update {
+      &:hover {
+        background-color: lighten($mainBackgroundColor, 2%);
+        box-shadow: rem(3) rem(3) rem(4) rgba(0, 0, 0, 0.5);
+      }
+      &:active {
+        box-shadow: rem(0) rem(0) rem(2) rgba(0, 0, 0, 0.5);
+      }
+    }
+    &_card {
+    }
+    &_copy {
+      border-radius: 15% 15% 0;
+      @include adaptiveValueRem("padding", 7, 4, $maxWidthContainer);
+    }
+  }
+}
+
+.main {
+  flex: 1 1 auto;
+
+  &__container {
+    @include CONTAINER;
+    padding: rem(40) 0 0;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__item {
+    flex: 0 0 100%;
+    @include adaptiveValueRem("padding", 15, 40, $maxWidthContainer);
+
+    @media (min-width: $mBp1L) {
+      flex: 0 0 50%;
+    }
+
+    @media (min-width: $mBp3) {
+      flex: 0 0 33.33334%;
+    }
+  }
+
+  @media (min-width: $mBp3) {
+    justify-content: space-between;
+  }
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__body {
+    @include adaptiveValueRem("width", 155, 250, $maxWidthContainer);
+    @include adaptiveValueRem("height", 155, 250, $maxWidthContainer);
+    @include adaptiveValueRem("margin", 5, 10, $maxWidthContainer);
+    background-color: rgba(196, 17, 116, 0.651);
+    border-radius: 15% 15% 0;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+  }
+  &__btn-body{
+    flex: 1 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__copy-body{
+    align-self: flex-end;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__btn {
+  }
+  &__copy-text{
+    cursor: pointer;
+    position: relative;
+    top: -100%;
+    margin: 0 rem(10);
+  }
+  &__copy-btn {
+    position: relative;
+    top: -100%;
+  }
+}
