@@ -11,11 +11,14 @@ append vars
     var extScripts = ['https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js']
     var scripts = ['/subprojects/websites/FullscreenSliderMaterialize/scripts/script.js',]
 
+  - var titleTxt = 'Surfing in Bali'
+
 block headEnd
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+
 mixin title()
-        h3.yellow-text Surfing in Bali
+        h3.yellow-text= titleTxt
 
 mixin text()
   if block
@@ -26,7 +29,7 @@ block content
   .slider.fullscreen
     ul.slides
       li
-        img(src='https://live.staticflickr.com/6163/6162682072_5046359061_o.jpg')
+        img(src='https://live.staticflickr.com/6163/6162682072_5046359061_o.jpg' alt=titleTxt)
         .caption.left-align
           +title()
           +text()
@@ -34,7 +37,7 @@ block content
               'VasenkaPhotography', 'https://www.flickr.com/people/vasenka/',
               'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
       li
-        img(src='https://live.staticflickr.com/1758/41809281824_b1484545e3_o.jpg')
+        img(src='https://live.staticflickr.com/1758/41809281824_b1484545e3_o.jpg' alt=titleTxt)
         .caption.center-align
           +title()
           +text()
@@ -42,7 +45,7 @@ block content
               'Wavehavenbali', 'https://www.flickr.com/people/162105766@N06/',
               'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
       li
-        img(src='https://live.staticflickr.com/5035/5848589030_d23bb43784_o.jpg')
+        img(src='https://live.staticflickr.com/5035/5848589030_d23bb43784_o.jpg' alt=titleTxt)
         .caption.right-align
           +title()
           +text()
@@ -50,7 +53,7 @@ block content
               'Gingerchrismc', 'https://www.flickr.com/people/gingerchrismc/',
               'CC BY 2.0', 'https://creativecommons.org/licenses/by/2.0/')
       li
-        img(src='https://images.unsplash.com/photo-1541681474356-5c6ad40c7990?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80')
+        img(src='https://images.unsplash.com/photo-1541681474356-5c6ad40c7990?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' alt=titleTxt)
         .caption.center-align
           +title()
           +text()
