@@ -1,0 +1,31 @@
+extends /pug/utils/_layout.pug
+
+append vars
+  -
+    var title = 'Light and dark theme switcher'
+    var styles = [
+      require('/styles/_reset.scss'),
+      require('./styles/styles.scss'),
+    ]
+
+    var scripts = ['/subprojects/controls/LightAndDarkTheme/scripts/script.js',]
+
+    link.shortcutIcon = require('/assets/images/favicon.ico')
+
+block content
+  .wrapper
+    header.header
+      .header__container
+        h1.header__title= title
+
+    main.main
+      .main__container
+        .main__item#item_1
+            button.button
+              span.button__body#btn_1 Case 1
+        .main__item#item_2
+            button.button
+              span.button__body#btn_2 Case 2
+        .main__item#item_3.themeLight_3
+            button.button
+              span.button__body#btn_3 Case 3

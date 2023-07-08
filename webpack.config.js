@@ -29,6 +29,7 @@ module.exports = (env, argv) => {
     subprojects: 'subprojects',
     games: 'subprojects/games',
     websites: 'subprojects/websites',
+    controls: 'subprojects/controls',
   }
 
   const SEPARATOR = '/';
@@ -142,6 +143,13 @@ module.exports = (env, argv) => {
         },
       },
       {
+        resourceQuery: /move-original/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[path][name][ext]',
+        },
+      },
+      {
         resourceQuery: /resource/,
         type: 'asset/resource',
       },
@@ -222,7 +230,11 @@ module.exports = (env, argv) => {
     websites: {
       import: 'pug/pages/websites.pug',
       filename: 'pages/websites.html',
-    }
+    },
+    controls: {
+      import: 'pug/pages/controls.pug',
+      filename: 'pages/controls.html',
+    },
   }
 
   const entrySubprojects = {
@@ -234,7 +246,13 @@ module.exports = (env, argv) => {
     },
     randomColorGenerator: {
       import: [`./${SUBPROJECTS_PATH.websites}/RandomColorGenerator/randomColorGenerator.pug`],
-    }
+    },
+    lightAndDarkTheme: {
+      import: [`./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/lightAndDarkTheme.pug`,
+      `./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/styles/themes/dark.css?move-original`,
+      `./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/styles/themes/light.css?move-original`,
+    ],
+    },
   }
 
   return [
@@ -254,7 +272,7 @@ module.exports = (env, argv) => {
         clean: true,
       },
       resolve: {
-        extensions: ['ts', '...'],
+        extensions: ['.ts', '...'],
         alias: {
           'src': PATHS.src,
           '~': PATHS.src,

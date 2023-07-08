@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&display=swap');
+@import '../../../../styles/mixins';
+
+$mainFont                   : 'PT Sans Caption', sans-serif;
+$mainFontColorLight         : rgb(42, 42, 42);
+$mainFontSize               : 24;
+$mainFontWeight             : 400;
+$mainLineHeight             : parts($mainFontSize * 0.8);
+$mainBackgroundColorLight   : rgb(242, 242, 242);
+$mainBackgroundColorDark    : rgb(42, 42, 42);
+
+$maxWidthContainer          : 1440;
+
+@mixin CONTAINER {
+  max-width: rem($maxWidthContainer);
+  margin: 0 auto;
+  padding: 0 rem(15);
+}
+
+body {
+  height: 100%;
+  font: {
+    family: $mainFont;
+    weight: $mainFontWeight;
+    size: rem($mainFontSize);
+  };
+  line-height: $mainLineHeight;
+  color: $mainFontColorLight;
+  background-color: $mainBackgroundColorLight;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  @include CONTAINER;
+}
+
+.header {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: rem(20) 0;
+  }
+  &__title {
+    font: {
+      weight: 700;
+      size: rem(32);
+    }
+    text-align: center;
+  }
+}
+
+.main {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 rem(-40) rem(10);
+    @include adaptiveValueRem("margin-top", 30, 70, $maxWidthContainer);
+  }
+  &__item {
+    @include adaptiveValueRem("width", 280, 480, $maxWidthContainer);
+    border: rem(2) solid $mainFontColorLight;
+    padding: rem(25) rem(40);
+    margin: rem(20) 0;
+    transition: all 0.4s ease 0s;
+  }
+}
+
+.button {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__body {
+    padding: rem(10) rem(20);
+    text-transform: uppercase;
+    border: rem(2) solid $mainFontColorLight;
+    overflow: hidden;
+    transition: all 0.3s ease 0s;
+    background-color: rgb(0, 255, 213);
+    letter-spacing: 0.1em;
+    &:hover {
+      background-color: rgb(0, 255, 194);
+      letter-spacing: 0.25em;
+    }
+    &:active {
+      letter-spacing: 0.17em;
+    }
+  }
+}
+
+.themeLight_3 {
+  color: $mainFontColorLight;
+  background-color: $mainBackgroundColorLight;
+}
+
+.themeDark_3 {
+  color: rgb(29, 165, 255);
+  background-color: $mainBackgroundColorDark;
+}
