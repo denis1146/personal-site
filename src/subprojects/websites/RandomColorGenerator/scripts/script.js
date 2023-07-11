@@ -63,12 +63,9 @@
 
 
   document.addEventListener('keydown', event => {
-    if (['space', 'enter', 'numpadenter'].includes(event.code.toLowerCase())) {
+    if (['space', 'enter', 'numpadenter', 'f5'].includes(event.code.toLowerCase())) {
       updateColors();
-    }
-    else if ('f5' === event.code.toLowerCase()) {
-      updateColorsHash();
-      updateColors();
+      event.preventDefault();
     }
   });
   const updateBtn = document.querySelector('.button__body_update');
