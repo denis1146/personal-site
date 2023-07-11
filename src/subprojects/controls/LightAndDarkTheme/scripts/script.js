@@ -13,6 +13,7 @@ async function main() {
       isDark = !isDark;
       item_1.style.backgroundColor = backgroundColor();
       item_1.style.color = fontColor();
+      btn_1.textContent = isDark ? 'Light' : 'Dark';
     };
   }
 
@@ -34,6 +35,7 @@ async function main() {
       else {
         document.head.append(link);
       }
+      btn_2.textContent = isDark ? 'Light' : 'Dark';
     }
 
     // Synchronization
@@ -46,12 +48,15 @@ async function main() {
   }
 
   { // item_3 and btn_3
+    let isDark = false;
     const item_3 = document.querySelector('#item_3');
     const btn_3 = document.querySelector('#btn_3');
 
     const toggleTheme = () => {
+      isDark = !isDark;
       item_3.classList.toggle('themeLight_3');
       item_3.classList.toggle('themeDark_3');
+      btn_3.textContent = isDark ? 'Light' : 'Dark';
     }
 
     btn_3.onclick = () => {
@@ -60,11 +65,14 @@ async function main() {
   }
 
   { // item_4 and btn_4
+    let isDark = false;
     const item_4 = document.querySelector('#item_4');
     const btn_4 = document.querySelector('#btn_4');
 
     const toggleTheme = () => {
+      isDark = !isDark;
       item_4.classList.toggle('themeDark_4');
+      btn_4.textContent = isDark ? 'Light' : 'Dark';
     }
 
     btn_4.onclick = () => {
