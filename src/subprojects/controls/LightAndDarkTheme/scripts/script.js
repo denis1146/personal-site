@@ -58,6 +58,19 @@ async function main() {
       toggleTheme();
     }
   }
+
+  { // item_4 and btn_4
+    const item_4 = document.querySelector('#item_4');
+    const btn_4 = document.querySelector('#btn_4');
+
+    const toggleTheme = () => {
+      item_4.classList.toggle('themeDark_4');
+    }
+
+    btn_4.onclick = () => {
+      toggleTheme();
+    }
+  }
 };
 
 window.addEventListener("load", event => {

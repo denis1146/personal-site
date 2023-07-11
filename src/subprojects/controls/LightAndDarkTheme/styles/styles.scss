@@ -95,6 +95,8 @@ body {
   }
 }
 
+//============================================================================
+
 .themeLight_3 {
   color: $mainFontColorLight;
   background-color: $mainBackgroundColorLight;
@@ -103,4 +105,21 @@ body {
 .themeDark_3 {
   color: rgb(29, 165, 255);
   background-color: $mainBackgroundColorDark;
+}
+
+//============================================================================
+
+:root {
+  --main-font-color: #{$mainFontColorLight};
+  --main-bg-color: #{$mainBackgroundColorLight};
+}
+
+#item_4.themeDark_4 {
+  --main-font-color: rgb(176, 255, 29);
+  --main-bg-color: #{$mainBackgroundColorDark};
+}
+
+#item_4 {
+  color: var(--main-font-color);
+  background-color: var(--main-bg-color);
 }
