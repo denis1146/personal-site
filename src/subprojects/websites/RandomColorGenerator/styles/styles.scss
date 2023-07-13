@@ -174,7 +174,8 @@ body {
     cursor: pointer;
     position: relative;
     top: -100%;
-    margin: 0 rem(10);
+    margin: rem(-10) 0;
+    padding: rem(10) rem(10);
   }
   &__copy-btn {
     position: relative;
