@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
   const PugPlugin = require('pug-plugin');
 
   const isDevMode = argv.mode === 'development';
+  const isDevServer = !!argv.open;
 
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
@@ -185,20 +186,22 @@ module.exports = (env, argv) => {
   }
 
   const plugins = () => {
+    const pugPlugin = new PugPlugin({
+      pretty: isDevMode,
+      filename: keepPugFolderStructure('html', `${PATHS.src}`,
+        (name, ext) => name + addExt(ext)
+      ),
+      css: {
+        filename: keepPugFolderStructure('css', `${PATHS.src}`, generatorName),
+      },
+      js: isDevServer ? {} : {
+        filename: keepPugFolderStructure('js', `${PATHS.src}`, generatorName),
+      },
+    });
+
     return [
-      new PugPlugin({
-        pretty: isDevMode,
-        filename: keepPugFolderStructure('html', `${PATHS.src}`,
-          (name, ext) => name + addExt(ext)
-        ),
-        css: {
-          filename: keepPugFolderStructure('css', `${PATHS.src}`, generatorName),
-        },
-        js: {
-          filename: keepPugFolderStructure('js', `${PATHS.src}`, generatorName),
-        },
-      }),
-    ]
+      pugPlugin,
+    ];
   }
 
   const optimization = () => {
