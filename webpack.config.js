@@ -8,10 +8,12 @@ module.exports = (env, argv) => {
   console.log('==============================================================================');
 
   const path = require('path');
+  const fs = require('fs');
   const PugPlugin = require('pug-plugin');
 
   const isDevMode = argv.mode === 'development';
   const isDevServer = !!argv.open;
+  const isLogging = false;
 
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
@@ -176,11 +178,13 @@ module.exports = (env, argv) => {
       const sourceFile = pathData.filename;
       const relativeFile = path.relative(`${relativePath}`, sourceFile);
       const { dir, name } = path.parse(relativeFile);
-      console.log(`=>>> keepPugFolderStructure:
-        name.ext = ${`${name}.${ext}`};
-        dir = ${dir};
-        sourceFile = ${pathData.filename};
-        generatorName = ${generatorName(name, ext)}\n`)
+      if (isLogging) {
+        console.log(`=>>> keepPugFolderStructure:
+          name.ext = ${`${name}.${ext}`};
+          dir = ${dir};
+          sourceFile = ${pathData.filename};
+          generatorName = ${generatorName(name, ext)}\n`)
+      }
       return `${dir}/${generatorName(name, ext)}`;
     }
   }
@@ -221,42 +225,81 @@ module.exports = (env, argv) => {
     return config;
   }
 
-  const entryPug = {
-    main: {
-      import: ['pug/pages/index.pug'],
-      filename: 'index.html',
-    },
-    games: {
-      import: 'pug/pages/games.pug',
-      filename: 'pages/games.html',
-    },
-    websites: {
-      import: 'pug/pages/websites.pug',
-      filename: 'pages/websites.html',
-    },
-    controls: {
-      import: 'pug/pages/controls.pug',
-      filename: 'pages/controls.html',
-    },
-  }
+  function getFiles(dir, ext = ''){
+    const files = [];
+    for (const item of fs.readdirSync(dir)){
+      const name = dir + '/' + item;
+      const stats = fs.statSync(name);
+      if (stats.isDirectory()){
+        files.push(...getFiles(name, ext));
+      } else if (stats.isFile()) {
+        if (ext.length === 0 || name.endsWith(`.${ext}`)) {
+          files.push(name);
+        }
+      }
+    }
+    return files;
+  };
 
-  const entrySubprojects = {
-    runOrLose: {
-      import: [`./${SUBPROJECTS_PATH.games}/RunOrLose/runOrLose.pug`],
-    },
-    fullscreenSliderMaterialize: {
-      import: [`./${SUBPROJECTS_PATH.websites}/FullscreenSliderMaterialize/fullscreenSliderMaterialize.pug`],
-    },
-    randomColorGenerator: {
-      import: [`./${SUBPROJECTS_PATH.websites}/RandomColorGenerator/randomColorGenerator.pug`],
-    },
-    lightAndDarkTheme: {
-      import: [`./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/lightAndDarkTheme.pug`,
-      `./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/styles/themes/dark.css?move-original`,
-      `./${SUBPROJECTS_PATH.controls}/LightAndDarkTheme/styles/themes/light.css?move-original`,
-    ],
-    },
-  }
+  const entryPug = (() => {
+    const res = {};
+    const IMPORT = 'import';
+    const INDEX = 'index';
+
+    const pagesPath = path.resolve(PATHS.src, PATHS.pages);
+    const pubFiles = fs.readdirSync(pagesPath)
+      .filter(file => fs.statSync(`${pagesPath}/${file}`).isFile())
+      .map(file => './' + path.relative(PATHS.src, `${pagesPath}/${file}`));
+
+    pubFiles.forEach(file => {
+      const projectName = path.basename(file, path.extname(file));
+      res[projectName] = {
+        [IMPORT]: [file],
+        filename: `${(projectName === INDEX ? '.' : './pages')}/${projectName}.html`,
+      }
+    });
+
+    if (isLogging) {
+      console.log('entryPug: \n', res);
+    }
+    return res;
+  })();
+
+  const entrySubprojects = (() => {
+    const res = {};
+    const IMPORT = 'import';
+
+    const subprojectsPath = path.resolve(PATHS.src, SUBPROJECTS_PATH.subprojects);
+    const subprojectsPaths = fs.readdirSync(subprojectsPath)
+      .map(el => subprojectsPath + '/' + el)
+      .filter(dir => fs.statSync(dir).isDirectory());
+
+    subprojectsPaths.forEach(subPath => {
+      for (const subproject of fs.readdirSync(subPath)){
+        const subprojectPath = subPath + '/' + subproject;
+        if (fs.statSync(subprojectPath).isDirectory()) {
+          const files = getFiles(subprojectPath, 'pug');
+          if (files.length) {
+            files.forEach((file, i) => files[i] = './' + path.relative(PATHS.src, file));
+            res[subproject] = {
+              [IMPORT]: files,
+            }
+          }
+        }
+      }
+    });
+
+    const LIGHT_AND_DARK_THEME = 'LightAndDarkTheme';
+    res?.[LIGHT_AND_DARK_THEME]?.[IMPORT].push(
+      `./${SUBPROJECTS_PATH.controls}/${LIGHT_AND_DARK_THEME}/styles/themes/dark.css?move-original`,
+      `./${SUBPROJECTS_PATH.controls}/${LIGHT_AND_DARK_THEME}/styles/themes/light.css?move-original`,
+    );
+
+    if (isLogging) {
+      console.log('entrySubprojects: \n', res);
+    }
+    return res;
+  })();
 
   return [
     {
