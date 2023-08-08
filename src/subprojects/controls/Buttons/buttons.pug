@@ -1,0 +1,25 @@
+extends /pug/utils/_layout.pug
+
+append vars
+  -
+    var title = 'Buttons'
+    var styles = [
+      require('/styles/_reset.scss'),
+      require('./styles/styles.scss'),
+    ]
+
+    var scripts = ['/subprojects/controls/Buttons/scripts/script.ts',]
+
+    link.shortcutIcon = require('/assets/images/favicon.ico')
+
+block content
+  .wrapper
+    main.main
+      .main__container
+        .main__item
+          a.button(href='#')
+            | Button
+        .main__item
+          a.button1(href='#')
+            span Button 1
+            i

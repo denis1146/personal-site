@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import '../../../../styles/mixins';
+
+$mainFont                   : 'Roboto';
+$mainFontColor              : #000;
+$mainFontSize               : 22;
+$mainFontSizeMax            : 27;
+$mainFontWeight             : 500;
+$mainLineHeight             : parts($mainFontSize * 1px);
+$mainBgColor                : #e8ffe5;
+
+$maxWidthContainer: 1440;
+
+@mixin CONTAINER {
+  max-width: rem($maxWidthContainer);
+  margin: 0 auto;
+}
+
+body {
+  font: {
+    family: $mainFont;
+    weight: $mainFontWeight;
+    size: rem($mainFontSize);
+  };
+  background-color: $mainBgColor;
+  line-height: $mainLineHeight;
+  color: $mainFontColor;
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  @include CONTAINER;
+}
+
+.main {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    @include CONTAINER;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__item {
+    margin: rem(50, $mainFontSizeMax);
+  }
+}
+
+// 0 =========================================================================
+
+.button {
+  display: inline-block;
+  padding: rem(25);
+  background-color: #27dfa2;
+  border: 1px solid #000;
+  border-radius: rem(25);
+  box-shadow: rem(3) rem(4) rem(5) rgba(0, 0, 0, 0.7);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #0ee79f;
+  }
+  &:active {
+    box-shadow: rem(0) rem(2) rem(3) rgba(0, 0, 0, 0.7);
+  }
+}
+
+// 1 =========================================================================
+
+$btn1-primary-color   : #024fb3;
+$btn1-primary-color-1 : #5dfbfe;
+$btn1-primary-color-2 : #fed65d;
+$btn1-primary-color-3 : #85fe5d;
+
+.button1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: rem(15) rem(25);
+  border: 3px solid $btn1-primary-color-1;
+  color: transparentize($btn1-primary-color, 0.3);
+  transition: 0.3s;
+  position: relative;
+
+  & i {
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+
+  & i::before {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 12px;
+    top: -8px;
+    left: 20%;
+    transform: translateX(-50%);
+    transition: 0.3s, box-shadow 0.3s;
+    transition-delay: 0.3s, 0s;
+
+    background-color: $mainBgColor;
+    border: 2px solid $btn1-primary-color-1;
+  }
+  &:hover {
+    & i::before {
+      width: 12px;
+      left: calc(80% + 6px);
+      box-shadow: -25px 0 $btn1-primary-color-1,
+        -25px 0 0 1px $btn1-primary-color-2,
+        -50px 0 $btn1-primary-color,
+        -50px 0 0 2px $btn1-primary-color-3,
+        -50px -18px 0 0 $btn1-primary-color-3,
+        -50px -18px 0 2px $btn1-primary-color-2;
+        transition-delay: 0s, 0.3s;
+      }
+  }
+
+  & i::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 12px;
+    bottom: -8px;
+    left: 80%;
+    transform: translateX(-50%);
+    transition: 0.3s, box-shadow 0.3s;
+    transition-delay: 0.3s, 0s;
+
+    background-color: $mainBgColor;
+    border: 2px solid $btn1-primary-color-1;
+  }
+  &:hover {
+    & i::after {
+      width: 12px;
+      left: calc(20% - 6px);
+      box-shadow: 25px 0 $btn1-primary-color-1,
+        25px 0 0 1px $btn1-primary-color-2,
+        50px 0 $btn1-primary-color,
+        50px 0 0 2px $btn1-primary-color-3,
+        50px 18px 0 0 $btn1-primary-color-3,
+        50px 18px 0 2px $btn1-primary-color-2;
+        transition-delay: 0s, 0.3s;
+      }
+  }
+
+  &:hover {
+    background-color: transparentize($btn1-primary-color-1, 0.8);
+    color: $btn1-primary-color;
+  }
+}
+
+// 2 =========================================================================
