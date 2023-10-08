@@ -1,0 +1,84 @@
+extends /pug/utils/_layout.pug
+
+append vars
+  -
+    var title = 'PS Notes'
+    var styles = [require('./styles/styles.scss')]
+    var scripts = ['/subprojects/websites/PsNotes/src/app.ts',]
+    link.icon = require('/assets/images/PSIcon32.png')
+
+block content
+  .wrapper
+    header.header
+      .header__container
+        h1.header__title= title
+
+        button.header__btn.button#grid-switcher
+          span.button__body.material-symbols-outlined grid_view
+        button.header__btn.button#fullscreen-switcher
+          span.button__body.material-symbols-outlined fullscreen
+        button.header__btn.button#theme-switcher
+          span.button__body.material-symbols-outlined dark_mode
+
+    main.main
+      .main__container
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test test test test test test test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test test test test test test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test
+        .main__item.card
+          .card__title
+            | Test
+          .card__text
+            | Text test test test test test test

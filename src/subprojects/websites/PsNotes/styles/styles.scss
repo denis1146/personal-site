@@ -1,0 +1,129 @@
+@import '../../../../styles/reset';
+@import '../../../../styles/mixins';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+:root {
+  --clPrimaryText:        #192323;
+  --clSecondaryText:      #555555;
+  --clPrimaryBg:          #ffffff;
+  --clBorder:             #a8a8a8;
+}
+
+.darkMode {
+  --clPrimaryText:        #f5f5f5;
+  --clSecondaryText:      #888888;
+  --clPrimaryBg:          #1a2323;
+  --clBorder:             #8a8a8a;
+}
+
+$mainFont                   : 'Roboto';
+
+$szMainTitle                : 22;
+$szMainTitleMax             : 27;
+
+$szTitleText                : 14;
+$szTitleTextMax             : 18;
+$szText                     : 13;
+$szTextMax                  : 15;
+
+$szFontWeight               : 500;
+$szLineHeight               : parts($szText * 1.4px);
+
+$currentCanvasWidth: 1440;
+
+$mBp2: 479.98px;
+
+body {
+  font: {
+    family: $mainFont;
+    weight: $szFontWeight;
+  };
+  @include adaptiveValueVp("font-size", $szText, $szTextMax, $currentCanvasWidth);
+  background-color: var(--clPrimaryBg);
+  line-height: $szLineHeight;
+  color: var(--clPrimaryText);
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  @include adaptiveValueVp("margin", 10, 30, $currentCanvasWidth);
+  margin-top: 0;
+}
+
+.header {
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: rem(8) rem(14);
+  }
+  &__title {
+    flex: 1 1 auto;
+    text-align: center;
+    @include adaptiveValueVp("font-size", $szMainTitle, $szMainTitleMax, $currentCanvasWidth);
+  }
+  &__btn {
+  }
+}
+
+.main {
+  flex: 1 1 auto;
+
+  &__container {
+    display: flex;
+    justify-content:space-around;
+    flex-direction: column;
+  }
+  &__container_grid {
+    flex-flow: row wrap;
+  }
+  &__item {
+    @include adaptiveValueVp("margin", 3, 5, $currentCanvasWidth);
+    @include adaptiveValueVp("padding", 10, 14, $currentCanvasWidth);
+
+    border: 1px solid var(--clBorder);
+    border-radius: 5px;
+  }
+  &__item_grid {
+    flex: 0 0 150px;
+  }
+}
+
+.card {
+  &__title {
+    @include adaptiveValueVp("font-size", $szTitleText, $szTitleTextMax, $currentCanvasWidth);
+
+  }
+  &__text {
+    color: var(--clSecondaryText);
+    @include adaptiveValueVp("margin-top", 3, 7, $currentCanvasWidth);
+  }
+}
+
+.button {
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__body {
+    @include adaptiveValueRem("padding", 6, 10, $currentCanvasWidth);
+    transition: all 0.2s ease 0s;
+    border-radius: 50%;
+    pointer-events: none;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, 0.20);
+    }
+
+  }
+}

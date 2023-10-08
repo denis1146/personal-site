@@ -8,7 +8,7 @@
     "build": "webpack --mode production --config-name main",
     "clean": "rm -r dist",
     "watch": "webpack --mode development --config-name main --watch",
-    "start": "npm run clean; webpack-dev-server --mode development --config-name main --open"
+    "start": "webpack-dev-server --mode development --config-name main --open"
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": [
