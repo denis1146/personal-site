@@ -30,6 +30,8 @@ $szTextMax                  : 15;
 $szFontWeight               : 500;
 $szLineHeight               : parts($szText * 1.4px);
 
+$clAddBtn                   : #27dfa2;
+
 $currentCanvasWidth: 1440;
 
 $mBp2: 479.98px;
@@ -112,18 +114,45 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s linear 0s;
+  border-radius: 50%;
+  @include adaptiveValueRem("padding", 6, 10, $currentCanvasWidth);
+
   &__body {
-    @include adaptiveValueRem("padding", 6, 10, $currentCanvasWidth);
-    transition: all 0.2s ease 0s;
-    border-radius: 50%;
+    display: inline-block;
     pointer-events: none;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  &:active {
+    background-color: rgba(0, 0, 0, 0.20);
+  }
+}
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.12);
-    }
-    &:active {
-      background-color: rgba(0, 0, 0, 0.20);
-    }
+.footer {
+}
 
+.helper {
+  &__button {
+    &_add {
+      padding: rem(8) rem(14);
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+    }
+  }
+}
+
+.button_add {
+  background-color: $clAddBtn;
+  @include adaptiveValueRem("padding", 12, 16, $currentCanvasWidth);
+
+  &:hover {
+    background-color: $clAddBtn;
+    box-shadow: 0 0 0 rem(4) $clAddBtn;
+  }
+  &:active {
+    background-color: transparentize($clAddBtn, 0.2);
   }
 }
