@@ -21,6 +21,4 @@ console.log('Util Id:', Util.id)
 
 console.log(...[0, 1, 2].map(x => x*x))
 
-const unused = 42
-
 console.log('End JS');

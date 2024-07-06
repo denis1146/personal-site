@@ -81,6 +81,6 @@ async function main() {
   }
 };
 
-window.addEventListener("load", event => {
+window.addEventListener("load", () => {
   main();
 });

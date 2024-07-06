@@ -4,5 +4,5 @@ document.addEventListener('DOMContentLoaded', function() {
     duration: 1000,
     interval: 4000,
   }
-  const instances = M.Slider.init(elems, options);
+  M.Slider.init(elems, options);
 });

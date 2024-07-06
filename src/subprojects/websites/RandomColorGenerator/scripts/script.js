@@ -6,6 +6,7 @@
   const NOTIFICATION_TEXT = 'Copied';
   let TIMEOUT_ID = [];
 
+  /*eslint-disable*/
   const generateRandomColor = () => {
     let color = '#';
     const length = 6;
@@ -14,6 +15,7 @@
     }
     return color;
   }
+  /*eslint-enable*/
 
   const whiteOrBlack = (color) => {
     return chroma(color).luminance() > 0.5 ? '#020c0cff' : '#f1e0e0ff';
@@ -54,7 +56,7 @@
     }
 
     const cards = document.querySelectorAll('.card__body');
-    if (colors.length != cards.length) {
+    if (colors.length !== cards.length) {
       colors = [];
       for (let i = 0; i < cards.length; ++i) {
         colors.push(chroma.random().toString()); // generateRandomColor();
@@ -91,7 +93,7 @@
     }
   });
   const updateBtn = document.querySelector('.button__body_update');
-  updateBtn.onclick = _ => updateColors();
+  updateBtn.onclick = () => updateColors();
 
   document.addEventListener('click', event => {
     const type = event.target.dataset.type;
