@@ -1,9 +1,17 @@
 import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
 import globals from "globals";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('@typescript-eslint/utils').TSESLint.FlatConfig.ConfigFile} */
 export default [
   js.configs.recommended,
+
+  ...tseslint.configs.recommended.map(conf => ({
+    ...conf,
+    files: ['**/*.ts'],
+  })),
+
   {
     languageOptions: {
       globals: {
@@ -15,9 +23,11 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
   },
+
   {
     ignores: ['node_modules/', '.git/', '.github/', 'dist/',],
   },
+
   {
     files: [
       'jest.config.js',
@@ -43,6 +53,7 @@ export default [
       }
     }
   },
+
   {
     files: ['**/*.{js,mjs}'],
     rules: {
@@ -51,6 +62,12 @@ export default [
       'eqeqeq': ['error', 'always'],
       'curly': 'error',
       'no-unused-expressions': 'error',
+    },
+  },
+
+  {
+    files: ['**/*.ts'],
+    rules: {
     },
   },
 ];
