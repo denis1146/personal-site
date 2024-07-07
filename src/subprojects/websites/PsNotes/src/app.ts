@@ -5,6 +5,6 @@ async function main() {
   app.start();
 };
 
-window.addEventListener("load", event => {
+window.addEventListener("load", () => {
   main();
 });

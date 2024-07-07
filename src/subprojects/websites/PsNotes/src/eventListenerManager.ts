@@ -28,7 +28,7 @@ class EventListenerManager {
         ((event.target as HTMLButtonElement).firstChild as HTMLSpanElement).textContent = isGridMode ? 'grid_view' : 'view_agenda';
 
         mainContainer.classList.toggle('main__container_grid');
-        for(let currentItem of Array.from(mainContainer.children)) {
+        for(const currentItem of Array.from(mainContainer.children)) {
           currentItem.classList.toggle('main__item_grid');
         }
       }
