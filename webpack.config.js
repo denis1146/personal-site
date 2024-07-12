@@ -339,7 +339,7 @@ module.exports = (env, argv) => {
       watchOptions: {
         ignored: /node_modules/,
       },
-      devtool: isDevMode ? 'eval' : 'source-map',
+      devtool: isDevMode ? 'source-map' : false,
       module: {
         rules: moduleRules()
       },
