@@ -63,11 +63,11 @@ body {
     margin: 0 rem(-40);
   }
   &__item {
-    @include adaptiveValueRem("width", 280, 480, $maxWidthContainer);
     border: rem(2) solid $mainFontColorLight;
     padding: rem(25) rem(40);
     margin: rem(10) 0;
     transition: all 0.4s ease 0s;
+    @include adaptiveValueRem("width", 280, 480, $maxWidthContainer);
   }
   &__title {
     padding: 0  0 rem(25) 0;

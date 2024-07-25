@@ -33,8 +33,8 @@ body {
     family: $mainFont;
     weight: $mainFontWeight;
   };
-  @include adaptiveValueRem("font-size", 15, 18, $maxWidthContainer);
   color: $mainFontColor;
+  @include adaptiveValueRem("font-size", 15, 18, $maxWidthContainer);
 }
 
 .wrapper {
@@ -75,7 +75,6 @@ body {
   align-items: center;
 
   &__body {
-    @include adaptiveValueRem("padding", 15, 10, $maxWidthContainer);
     text-transform: uppercase;
     text-align: center;
     border: rem(2) solid $mainFontColor;
@@ -83,6 +82,7 @@ body {
     overflow: hidden;
     transition: all 0.3s ease 0s;
     border-color: $mainFontColor;
+    @include adaptiveValueRem("padding", 15, 10, $maxWidthContainer);
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.12);
@@ -145,15 +145,16 @@ body {
   align-items: center;
 
   &__body {
-    @include adaptiveValueRem("width", 155, 250, $maxWidthContainer);
-    @include adaptiveValueRem("height", 155, 250, $maxWidthContainer);
-    @include adaptiveValueRem("margin", 5, 10, $maxWidthContainer);
     background-color: rgba(196, 17, 116, 0.651);
     border-radius: 15% 15% 0;
     overflow: hidden;
 
     display: flex;
     flex-direction: column;
+
+    @include adaptiveValueRem("width", 155, 250, $maxWidthContainer);
+    @include adaptiveValueRem("height", 155, 250, $maxWidthContainer);
+    @include adaptiveValueRem("margin", 5, 10, $maxWidthContainer);
   }
   &__btn-body{
     flex: 1 0 100%;

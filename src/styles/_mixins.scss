@@ -61,12 +61,18 @@ $baseFontSize: 16px;
 // Adaptive value in rem inside the container
 @mixin adaptiveValueRem($property, $minValue, $maxValue,
   $maxWidthContainer, $minWidthContainer: 320) {
-  #{$property}: rem($minValue);
-  @media (min-width: ($minWidthContainer * 1px)) {
-    @include adaptiveValueVpRem($property, $minValue, $maxValue,
-    $maxWidthContainer, $minWidthContainer);
+  & {
+    #{$property}: rem($minValue);
   }
-  @media (min-width: ($maxWidthContainer * 1px)) {
-    #{$property}: rem($maxValue * 1px);
+  & {
+    @media (min-width: ($minWidthContainer * 1px)) {
+      @include adaptiveValueVpRem($property, $minValue, $maxValue,
+      $maxWidthContainer, $minWidthContainer);
+    }
+  }
+  & {
+    @media (min-width: ($maxWidthContainer * 1px)) {
+      #{$property}: rem($maxValue * 1px);
+    }
   }
 }
