@@ -21,6 +21,9 @@
   ],
   "author": "Denis Karasev <denisk1146@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "typed-signals": "^3.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.21.5",
     "@babel/preset-env": "^7.21.5",
