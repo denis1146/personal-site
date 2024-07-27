@@ -15,6 +15,8 @@ module.exports = (env, argv) => {
   const isDevServer = !!argv.open;
   const isLogging = false;
 
+  const VENDORS = 'VENDORS';
+
   const PATHS = {
     src: path.resolve(__dirname, 'src'),
     dist: path.resolve(__dirname, 'dist'),
@@ -175,15 +177,19 @@ module.exports = (env, argv) => {
 
   const keepPugFolderStructure = (ext, relativePath, generatorName) => {
     return pathData => {
-      const sourceFile = pathData.filename;
-      const relativeFile = path.relative(`${relativePath}`, sourceFile);
+      const sourceFile = pathData.filename || VENDORS;
+      const relativeFile = pathData.filename ?
+                          path.relative(`${relativePath}`, sourceFile) : VENDORS;
       const { dir, name } = path.parse(relativeFile);
       if (isLogging) {
         console.log(`=>>> keepPugFolderStructure:
           name.ext = ${`${name}.${ext}`};
           dir = ${dir};
-          sourceFile = ${pathData.filename};
-          generatorName = ${generatorName(name, ext)}\n`)
+          sourceFile = ${sourceFile};
+          generatorName = ${generatorName(name, ext)}
+          relativePath = ${relativePath}
+          relativeFile = ${relativeFile}
+        `)
       }
       return `${dir}/${generatorName(name, ext)}`;
     }
@@ -213,7 +219,7 @@ module.exports = (env, argv) => {
       splitChunks: {
         cacheGroups: {
           vendor: {
-            name: 'vendors',
+            name: VENDORS,
             test: /[\\/]node_modules[\\/].+\.(js|ts)$/,
             chunks: 'all',
             enforce: true,
@@ -324,7 +330,7 @@ module.exports = (env, argv) => {
           '~': PATHS.src,
         }
       },
-      optimization: optimization(),
+      optimization: VENDORS.length ? optimization() : {},
       devServer: {
         port: 4004,
         hot: false,
