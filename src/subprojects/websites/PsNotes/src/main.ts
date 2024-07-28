@@ -1,7 +1,9 @@
 import Application from './application';
 
+let app: null | Application = null;
+
 async function main() {
-  const app = new Application;
+  app = new Application;
   app.start();
 };
 
